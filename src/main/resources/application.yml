@@ -1,6 +1,17 @@
 server:
   port: 8083
 
+spring:
+  r2dbc:
+    url: r2dbc:h2:mem:///test
+    username: sa
+    password:
+
+logging:
+  level:
+    root: INFO
+    org.springframework.r2dbc: DEBUG
+
 msa:
   client:
     url:

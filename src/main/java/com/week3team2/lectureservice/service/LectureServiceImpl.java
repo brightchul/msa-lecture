@@ -1,18 +1,20 @@
 package com.week3team2.lectureservice.service;
 
-import com.week3team2.lectureservice.model.Lecture;
+import com.week3team2.lectureservice.entity.Lecture;
+import com.week3team2.lectureservice.model.LectureFactory;
 import com.week3team2.lectureservice.repository.LectureRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
+@RequiredArgsConstructor
 public class LectureServiceImpl implements LectureService {
 
     private final LectureRepository lectureRepository;
+    private final LectureFactory lectureFactory;
 
-    public LectureServiceImpl(LectureRepository lectureRepository) {
-        this.lectureRepository = lectureRepository;
-    }
 
     // 수강자 성적 입력
     @Override
@@ -38,4 +40,8 @@ public class LectureServiceImpl implements LectureService {
         return null;
     }
 
+    @Override
+    public Flux<Lecture> getLectureAllList() {
+        return lectureRepository.findAll();
+    }
 }

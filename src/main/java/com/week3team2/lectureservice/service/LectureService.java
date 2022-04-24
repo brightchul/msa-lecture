@@ -1,6 +1,7 @@
 package com.week3team2.lectureservice.service;
 
-import com.week3team2.lectureservice.model.Lecture;
+import com.week3team2.lectureservice.entity.Lecture;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface LectureService {
@@ -24,6 +25,9 @@ public interface LectureService {
     // 강의를 학생 회원에게 노출 및 종료
 
     // 강의를 선택해서 수강 신청
+
+    // 강의 목록 조회
+    Flux<Lecture> getLectureAllList();
 
     // 수강한 강의의 목록 조회
 
