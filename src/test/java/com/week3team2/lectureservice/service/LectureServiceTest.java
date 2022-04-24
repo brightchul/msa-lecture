@@ -1,7 +1,6 @@
-package com.week3team2.lectureservice.repository;
+package com.week3team2.lectureservice.service;
 
 import com.week3team2.lectureservice.entity.Lecture;
-import com.week3team2.lectureservice.service.LectureService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,17 +9,16 @@ import reactor.test.StepVerifier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 @SpringBootTest
-class LectureRepositoryTest {
+class LectureServiceTest {
 
     @Autowired
-    LectureRepository repository;
-
+    LectureService lectureService;
 
     @Test
-    void readsAllEntitiesCorrectly() {
-        StepVerifier.create(repository.findAll())
+    void getLectureAllListTest() {
+        Flux<Lecture> result  = lectureService.getLectureAllList();
+        StepVerifier.create(result)
                 .assertNext(o -> assertEquals(o.getLectureName(), "스프링 강의"))
                 .assertNext(o -> assertEquals(o.getLectureName(), "마이크로 서비스 강의"))
                 .assertNext(o -> assertEquals(o.getLectureName(), "자바 강의"))
@@ -29,5 +27,4 @@ class LectureRepositoryTest {
                 .assertNext(o -> assertEquals(o.getLectureName(), "알고리즘 강의"))
                 .assertNext(o -> assertEquals(o.getLectureName(), "자료구조 강의")).verifyComplete();
     }
-
 }
