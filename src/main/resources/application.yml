@@ -1,0 +1,7 @@
+server:
+  port: 8083
+
+msa:
+  client:
+    url:
+      gateway: http://localhost:8080 # gateway 주소
