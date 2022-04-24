@@ -1,6 +1,5 @@
 package com.week3team2.lectureservice.config;
 
-import com.week3team2.lectureservice.model.Lecture;
 import com.week3team2.lectureservice.model.LectureFactory;
 import com.week3team2.lectureservice.repository.LectureRepository;
 import io.r2dbc.spi.ConnectionFactory;

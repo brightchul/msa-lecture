@@ -1,6 +1,6 @@
 package com.week3team2.lectureservice.handler;
 
-import com.week3team2.lectureservice.model.Lecture;
+import com.week3team2.lectureservice.entity.Lecture;
 import com.week3team2.lectureservice.service.LectureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
