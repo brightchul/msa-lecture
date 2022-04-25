@@ -1,6 +1,7 @@
 package com.week3team2.lectureservice.handler;
 
 import com.week3team2.lectureservice.entity.Lecture;
+import com.week3team2.lectureservice.entity.LectureContent;
 import com.week3team2.lectureservice.service.LectureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
+
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -23,29 +26,32 @@ public class TeacherHandler {
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(lectureMono, Lecture.class);
+                .body(lectureMono, Lecture.class)
+                .onErrorResume(error -> ServerResponse.badRequest().build());
     }
 
     // 시험 컨텐츠 추가
     public Mono<ServerResponse> updateNewTest(ServerRequest request) {
 
-        Mono<Lecture> lectureMono = request.bodyToMono(Lecture.class)
+        Mono<LectureContent> lectureMono = request.bodyToMono(Map.class)
                 .flatMap(lectureService::updateNewTest);
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(lectureMono, Lecture.class);
+                .body(lectureMono, LectureContent.class)
+                .onErrorResume(error -> ServerResponse.badRequest().build());
     }
 
     // 강의 컨텐츠 업로드
     public Mono<ServerResponse> uploadContent(ServerRequest request) {
 
-        Mono<Lecture> lectureMono = request.bodyToMono(Lecture.class)
+        Mono<LectureContent> lectureMono = request.bodyToMono(Map.class)
                 .flatMap(lectureService::uploadContent);
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(lectureMono, Lecture.class);
+                .body(lectureMono, LectureContent.class)
+                .onErrorResume(error -> ServerResponse.badRequest().build());
     }
 
     // 강사에 매칭된 강의 목록 조회
@@ -56,6 +62,7 @@ public class TeacherHandler {
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(lectureMono, Lecture.class);
+                .body(lectureMono, Lecture.class)
+                .onErrorResume(error -> ServerResponse.badRequest().build());
     }
 }
