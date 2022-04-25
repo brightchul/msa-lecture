@@ -17,14 +17,11 @@ class LectureServiceTest {
 
     @Test
     void getLectureAllListTest() {
-        Flux<Lecture> result  = lectureService.getLectureAllList();
+        Flux<Lecture> result = lectureService.getLectureAllList();
         StepVerifier.create(result)
-                .assertNext(o -> assertEquals(o.getLectureName(), "스프링 강의"))
-                .assertNext(o -> assertEquals(o.getLectureName(), "마이크로 서비스 강의"))
-                .assertNext(o -> assertEquals(o.getLectureName(), "자바 강의"))
-                .assertNext(o -> assertEquals(o.getLectureName(), "데이터베이스 강의"))
-                .assertNext(o -> assertEquals(o.getLectureName(), "네트워크 강의"))
-                .assertNext(o -> assertEquals(o.getLectureName(), "알고리즘 강의"))
-                .assertNext(o -> assertEquals(o.getLectureName(), "자료구조 강의")).verifyComplete();
+                .assertNext(o -> assertEquals(o.getLectureName(), "testName"))
+                .assertNext(o -> assertEquals(o.getLectureName(), "테스트강의"))
+                .verifyComplete();
     }
+
 }
