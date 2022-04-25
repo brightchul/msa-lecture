@@ -1,6 +1,7 @@
 package com.week3team2.lectureservice.service;
 
 import com.week3team2.lectureservice.entity.Lecture;
+import com.week3team2.lectureservice.entity.LectureContent;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import java.util.Map;
@@ -11,10 +12,10 @@ public interface LectureService {
     Mono<Lecture> updateStudentScore(Lecture lecture);
 
     // 시험 컨텐츠 추가
-    Mono<Lecture> updateNewTest(Lecture lecture);
+    Mono<LectureContent> updateNewTest(Map<String, Object> param);
 
     // 강의 컨텐츠 업로드
-    Mono<Lecture> uploadContent(Lecture lecture);
+    Mono<LectureContent> uploadContent(Map<String, Object> param);
 
     // 강사에 매칭된 강의 목록 조회
     Mono<Lecture> getLectureOnTeacher(Lecture lecture);

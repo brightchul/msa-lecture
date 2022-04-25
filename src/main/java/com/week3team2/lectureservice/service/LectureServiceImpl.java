@@ -1,6 +1,8 @@
 package com.week3team2.lectureservice.service;
 
 import com.week3team2.lectureservice.entity.Lecture;
+import com.week3team2.lectureservice.entity.LectureContent;
+import com.week3team2.lectureservice.repository.LectureContentRepository;
 import com.week3team2.lectureservice.repository.LectureRepository;
 
 import java.time.LocalDateTime;
@@ -15,9 +17,11 @@ import reactor.core.publisher.Mono;
 public class LectureServiceImpl implements LectureService {
 
     private final LectureRepository lectureRepository;
+    private final LectureContentRepository lectureContentRepository;
 
-    public LectureServiceImpl(LectureRepository lectureRepository) {
+    public LectureServiceImpl(LectureRepository lectureRepository, LectureContentRepository lectureContentRepository) {
         this.lectureRepository = lectureRepository;
+        this.lectureContentRepository = lectureContentRepository;
     }
 
     // 수강자 성적 입력
@@ -28,14 +32,14 @@ public class LectureServiceImpl implements LectureService {
 
     // 시험 컨텐츠 추가
     @Override
-    public Mono<Lecture> updateNewTest(Lecture lecture) {
-        return null;
+    public Mono<LectureContent> updateNewTest(Map<String, Object> param) {
+        return lectureContentRepository.save(new LectureContent("testId2", "test3", "blahblah", "testId", "1",  LocalDateTime.now(), LocalDateTime.now()));
     }
 
     // 강의 컨텐츠 업로드
     @Override
-    public Mono<Lecture> uploadContent(Lecture lecture) {
-        return null;
+    public Mono<LectureContent> uploadContent(Map<String, Object> param) {
+        return lectureContentRepository.save(new LectureContent("testId2", "test3", "blahblah", "testId", "1",  LocalDateTime.now(), LocalDateTime.now()));
     }
 
     // 강사에 매칭된 강의 목록 조회
