@@ -6,6 +6,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,24 +17,28 @@ import java.sql.Timestamp;
 @Table(value = "lecture")
 public class Lecture {
     @Id
-    @Column(value = "lecture_id")
-    private Integer lectureId;
+    @Column(value = "lectureId")
+    private String lectureId;
 
-    @Column(value ="lecture_name")
+    @Column(value ="lectureName")
     private String lectureName;
 
-    @Column(value ="member_id")
-    private Integer memberId;
+    @Column(value ="memberId")
+    private String memberId;
 
-    @Column(value ="lecture_show_yn")
+    @Column(value="memberName")
+    private String memberName;
+
+    @Column(value ="lectureShowYn")
     private Boolean lectureShowYn;
 
-    @Column(value ="lecture_total_score")
+    @Column(value ="lectureTotalScore")
     private Integer lectureTotalScore;
 
-    @Column(value ="insert_dt")
-    private Timestamp insertDt;
+    @Column(value ="insertDt")
+    private LocalDateTime insertDt;
 
-    @Column(value ="update_dt")
-    private Timestamp updateDt;
+    @Column(value ="updateDt")
+    private LocalDateTime updateDt;
+
 }

@@ -14,3 +14,5 @@ create table IF NOT EXISTS lecture
 );
 
 INSERT INTO lecture VALUES ('testId', 'testName', 'teacherId', 'teacherName', false, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO lecture VALUES ('testId2', '테스트강의', 'teacherId2', 'teacherName2',
+false, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

@@ -1,14 +1,12 @@
 package com.week3team2.lectureservice.service;
 
-import com.week3team2.lectureservice.model.Lecture;
-import com.week3team2.lectureservice.model.LectureFactory;
+import com.week3team2.lectureservice.entity.Lecture;
 import com.week3team2.lectureservice.repository.LectureRepository;
-import java.sql.Timestamp;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -58,7 +56,7 @@ public class LectureServiceImpl implements LectureService {
         String lectureId = UUID.randomUUID().toString();
         String lectureName = (String) param.get("lectureName");
         return lectureRepository.save(
-                new Lecture(lectureId, lectureName, "", "", false, LocalDateTime.now(), LocalDateTime.now()));
+                new Lecture(lectureId, lectureName, "", "", false, 0, LocalDateTime.now(), LocalDateTime.now()));
     }
 
     // 강의에 강사 매칭
@@ -70,7 +68,7 @@ public class LectureServiceImpl implements LectureService {
 
     private Mono<Lecture> setTeacherData(Lecture lecture, Map<String, Object> param) {
         lecture.setLectureId((String) param.get("lectureId"));
-        lecture.setTeacherId((String) param.get("teacherId"));
+        lecture.setMemberId((String) param.get("teacherId"));
         lecture.setLectureName((String) param.get("teacherName"));
         lecture.setUpdateDt(LocalDateTime.now());
         return lectureRepository.save(lecture);
