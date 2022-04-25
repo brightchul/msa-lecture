@@ -1,18 +1,20 @@
 server:
   port: 8083
 
-spring:
-  r2dbc:
-    url: r2dbc:h2:mem:///test
-    username: sa
-    password:
-
-logging:
-  level:
-    root: INFO
-    org.springframework.r2dbc: DEBUG
-
 msa:
   client:
     url:
       gateway: http://localhost:8080 # gateway 주소
+
+spring:
+  r2dbc:
+    url: r2dbc:h2:mem:///lecture;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false
+    username: sa
+    password:
+    initialization-mode: always
+logging:
+  level:
+    org:
+      springframework:
+        r2dbc: DEBUG
+debug: false

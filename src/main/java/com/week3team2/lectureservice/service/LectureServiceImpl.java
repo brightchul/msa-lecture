@@ -1,20 +1,26 @@
 package com.week3team2.lectureservice.service;
 
-import com.week3team2.lectureservice.entity.Lecture;
+import com.week3team2.lectureservice.model.Lecture;
 import com.week3team2.lectureservice.model.LectureFactory;
 import com.week3team2.lectureservice.repository.LectureRepository;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-@RequiredArgsConstructor
 public class LectureServiceImpl implements LectureService {
 
     private final LectureRepository lectureRepository;
-    private final LectureFactory lectureFactory;
 
+    public LectureServiceImpl(LectureRepository lectureRepository) {
+        this.lectureRepository = lectureRepository;
+    }
 
     // 수강자 성적 입력
     @Override
@@ -44,4 +50,36 @@ public class LectureServiceImpl implements LectureService {
     public Flux<Lecture> getLectureAllList() {
         return lectureRepository.findAll();
     }
+
+    // 강의 개설
+    @Override
+    public Mono<Lecture> createLecture(Map<String, Object> param) {
+
+        String lectureId = UUID.randomUUID().toString();
+        String lectureName = (String) param.get("lectureName");
+        return lectureRepository.save(
+                new Lecture(lectureId, lectureName, "", "", false, LocalDateTime.now(), LocalDateTime.now()));
+    }
+
+    // 강의에 강사 매칭
+    @Override
+    public Mono<Lecture> matchingLecture(Map<String, Object> param) {
+        return lectureRepository.findByLectureId((String) param.get("lectureId"))
+                .flatMap(data -> setTeacherData(data, param));
+    }
+
+    private Mono<Lecture> setTeacherData(Lecture lecture, Map<String, Object> param) {
+        lecture.setLectureId((String) param.get("lectureId"));
+        lecture.setTeacherId((String) param.get("teacherId"));
+        lecture.setLectureName((String) param.get("teacherName"));
+        lecture.setUpdateDt(LocalDateTime.now());
+        return lectureRepository.save(lecture);
+    }
+
+    // 강의 아이디로 강의 조회 (테스트)
+    @Override
+    public Mono<Lecture> getLecture(String lectureId) {
+        return lectureRepository.findByLectureId(lectureId);
+    }
+
 }

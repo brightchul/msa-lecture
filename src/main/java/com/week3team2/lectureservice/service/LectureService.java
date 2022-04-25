@@ -3,6 +3,7 @@ package com.week3team2.lectureservice.service;
 import com.week3team2.lectureservice.entity.Lecture;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.Map;
 
 public interface LectureService {
 
@@ -19,17 +20,20 @@ public interface LectureService {
     Mono<Lecture> getLectureOnTeacher(Lecture lecture);
 
     // 강의 개설
+    Mono<Lecture> createLecture(Map<String, Object> param);
 
     // 강의에 강사 매칭
+    Mono<Lecture> matchingLecture(Map<String, Object> param);
+
+    // 강의 아이디로 강의 조회 (테스트)
+    Mono<Lecture> getLecture(String lectureId);
 
     // 강의를 학생 회원에게 노출 및 종료
 
     // 강의를 선택해서 수강 신청
 
-    // 강의 목록 조회
-    Flux<Lecture> getLectureAllList();
-
     // 수강한 강의의 목록 조회
+    Flux<Lecture> getLectureAllList();
 
     // 수강 신청한 강의 컨텐츠 열람
 
