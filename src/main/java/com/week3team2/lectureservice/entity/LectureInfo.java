@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(value = "lectureInfo")
 public class LectureInfo {
     @Id
     @Column(value = "lectureInfoId")
@@ -26,8 +27,8 @@ public class LectureInfo {
     @Column(value ="testScore")
     private Integer testScore;
 
-    @Column(value="lectureInfoState")
-    private String LectureInfoState;
+    @Column(value="lectureState")
+    private String LectureState;
 
     @Column(value ="lectureScore")
     private Integer lectureScore;
