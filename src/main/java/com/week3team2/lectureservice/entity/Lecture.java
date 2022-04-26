@@ -18,13 +18,13 @@ import java.time.LocalDateTime;
 public class Lecture {
     @Id
     @Column(value = "lectureId")
-    private String lectureId;
+    private Integer lectureId;
 
     @Column(value ="lectureName")
     private String lectureName;
 
     @Column(value ="memberId")
-    private String memberId;
+    private Integer memberId;
 
     @Column(value="memberName")
     private String memberName;
