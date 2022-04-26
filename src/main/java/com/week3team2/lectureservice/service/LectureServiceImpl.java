@@ -32,14 +32,16 @@ public class LectureServiceImpl implements LectureService {
 
     // 시험 컨텐츠 추가
     @Override
-    public Mono<LectureContent> updateNewTest(Map<String, Object> param) {
-        return lectureContentRepository.save(new LectureContent("testId2", "test3", "blahblah", "testId", "1",  LocalDateTime.now(), LocalDateTime.now()));
+    public Mono<LectureContent> updateNewExam(LectureContent lectureContent) {
+        lectureContent.setContentType("exam");
+        return lectureContentRepository.save(lectureContent);
     }
 
     // 강의 컨텐츠 업로드
     @Override
-    public Mono<LectureContent> uploadContent(Map<String, Object> param) {
-        return lectureContentRepository.save(new LectureContent("testId2", "test3", "blahblah", "testId", "1",  LocalDateTime.now(), LocalDateTime.now()));
+    public Mono<LectureContent> uploadContent(LectureContent lectureContent) {
+        lectureContent.setContentType("lecture");
+        return lectureContentRepository.save(lectureContent);
     }
 
     // 강사에 매칭된 강의 목록 조회

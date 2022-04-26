@@ -12,10 +12,10 @@ public interface LectureService {
     Mono<Lecture> updateStudentScore(Lecture lecture);
 
     // 시험 컨텐츠 추가
-    Mono<LectureContent> updateNewTest(Map<String, Object> param);
+    Mono<LectureContent> updateNewExam(LectureContent lectureContent);
 
     // 강의 컨텐츠 업로드
-    Mono<LectureContent> uploadContent(Map<String, Object> param);
+    Mono<LectureContent> uploadContent(LectureContent lectureContent);
 
     // 강사에 매칭된 강의 목록 조회
     Mono<Lecture> getLectureOnTeacher(Lecture lecture);
