@@ -2,12 +2,14 @@ package com.week3team2.lectureservice.service;
 
 import com.week3team2.lectureservice.entity.Lecture;
 import com.week3team2.lectureservice.entity.LectureContent;
+import com.week3team2.lectureservice.entity.LectureInfo;
+import com.week3team2.lectureservice.entity.LectureInfoState;
 import com.week3team2.lectureservice.repository.LectureContentRepository;
+import com.week3team2.lectureservice.repository.LectureInfoRepository;
 import com.week3team2.lectureservice.repository.LectureRepository;
 
 import java.time.LocalDateTime;
-import java.util.Map;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -18,10 +20,12 @@ public class LectureServiceImpl implements LectureService {
 
     private final LectureRepository lectureRepository;
     private final LectureContentRepository lectureContentRepository;
+    private final LectureInfoRepository lectureInfoRepository;
 
-    public LectureServiceImpl(LectureRepository lectureRepository, LectureContentRepository lectureContentRepository) {
+    public LectureServiceImpl(LectureRepository lectureRepository, LectureContentRepository lectureContentRepository, LectureInfoRepository lectureInfoRepository) {
         this.lectureRepository = lectureRepository;
         this.lectureContentRepository = lectureContentRepository;
+        this.lectureInfoRepository = lectureInfoRepository;
     }
 
     // 수강자 성적 입력
@@ -32,14 +36,16 @@ public class LectureServiceImpl implements LectureService {
 
     // 시험 컨텐츠 추가
     @Override
-    public Mono<LectureContent> updateNewTest(Map<String, Object> param) {
-        return lectureContentRepository.save(new LectureContent("testId2", "test3", "blahblah", "testId", "1",  LocalDateTime.now(), LocalDateTime.now()));
+    public Mono<LectureContent> updateNewExam(LectureContent lectureContent) {
+        lectureContent.setContentType("exam");
+        return lectureContentRepository.save(lectureContent);
     }
 
     // 강의 컨텐츠 업로드
     @Override
-    public Mono<LectureContent> uploadContent(Map<String, Object> param) {
-        return lectureContentRepository.save(new LectureContent("testId2", "test3", "blahblah", "testId", "1",  LocalDateTime.now(), LocalDateTime.now()));
+    public Mono<LectureContent> uploadContent(LectureContent lectureContent) {
+        lectureContent.setContentType("lecture");
+        return lectureContentRepository.save(lectureContent);
     }
 
     // 강사에 매칭된 강의 목록 조회
@@ -53,35 +59,62 @@ public class LectureServiceImpl implements LectureService {
         return lectureRepository.findAll();
     }
 
+    // 학생 회원이 제출한 별점을 열람
+    @Override
+    public Mono<Lecture> getLectureTotalScore(String lectureId) {
+        return lectureRepository.getTotalScore(lectureId);
+    }
+
     // 강의 개설
     @Override
-    public Mono<Lecture> createLecture(Map<String, Object> param) {
-
-        String lectureId = UUID.randomUUID().toString();
-        String lectureName = (String) param.get("lectureName");
-        return lectureRepository.save(
-                new Lecture(lectureId, lectureName, "", "", false, 0, LocalDateTime.now(), LocalDateTime.now()));
+    public Mono<Lecture> createLecture(Lecture lecture) {
+        String lectureName = lecture.getLectureName();
+        String memberName = lecture.getMemberName();
+        return lectureRepository.save(new Lecture(null, lectureName, 0, memberName, false, 0, LocalDateTime.now(), LocalDateTime.now()));
     }
 
     // 강의에 강사 매칭
     @Override
-    public Mono<Lecture> matchingLecture(Map<String, Object> param) {
-        return lectureRepository.findByLectureId((String) param.get("lectureId"))
-                .flatMap(data -> setTeacherData(data, param));
-    }
-
-    private Mono<Lecture> setTeacherData(Lecture lecture, Map<String, Object> param) {
-        lecture.setLectureId((String) param.get("lectureId"));
-        lecture.setMemberId((String) param.get("teacherId"));
-        lecture.setLectureName((String) param.get("teacherName"));
-        lecture.setUpdateDt(LocalDateTime.now());
-        return lectureRepository.save(lecture);
+    public Mono<Lecture> matchingLecture(Lecture lecture) {
+        return lectureRepository.findById(lecture.getLectureId())
+                .doOnNext(data-> data.setMemberName(lecture.getMemberName()))
+                .flatMap(lectureRepository::save)
+                .log()
+                ;
     }
 
     // 강의 아이디로 강의 조회 (테스트)
     @Override
-    public Mono<Lecture> getLecture(String lectureId) {
-        return lectureRepository.findByLectureId(lectureId);
+    public Mono<Lecture> getLecture(Integer lectureId) {
+        return lectureRepository.findById(lectureId);
+    }
+
+    // 강의를 학생 회원에게 노출 및 종료
+    @Override
+    public Mono<Lecture> changeLectureShowYn(Lecture lecture) {
+        return lectureRepository.changeLectureShowYn(lecture.getLectureId(), lecture.getLectureShowYn());
+    }
+
+    // 수강한 강의에 별점 남기기
+    @Override
+    public Mono<LectureInfo> setLectureScore(LectureInfo lectureInfo) {
+
+        return lectureInfoRepository.findByLectureInfo(lectureInfo.getLectureId(), lectureInfo.getMemberId())
+                .doOnNext(data-> data.setLectureScore(lectureInfo.getLectureScore()))
+//                .doOnNext(this::setLectureTotalScore)
+                .flatMap(lectureInfoRepository::save)
+                .log();
+    }
+
+    private void setLectureTotalScore(LectureInfo lectureinfo){
+
+        Flux<LectureInfo> test = lectureInfoRepository.findByLectureInfoList(lectureinfo.getLectureId())
+                .log()
+                ;
+
+        Mono<Double> average = test.collect(Collectors.averagingInt(LectureInfo::getLectureScore))
+                .log()
+                ;
     }
 
 }
