@@ -16,8 +16,8 @@ public class LectureAdminRouter {
     @Bean
     public RouterFunction<ServerResponse> route(LectureAdminHandler lectureAdminHandler) {
         return RouterFunctions
-                .route(POST("/admin/lecture/create"), lectureAdminHandler::createLecture)              // 강의개설
-                .andRoute(POST("/admin/lecture/matching"), lectureAdminHandler::matchingLecture)       // 강사 매칭
+                .route(POST("/lecture/admin/create"), lectureAdminHandler::createLecture)              // 강의개설
+                .andRoute(POST("/lecture/admin/matching"), lectureAdminHandler::matchingLecture)       // 강사 매칭
                 .andRoute(GET("/lecture/getLecture"), lectureAdminHandler::getLecture)                 // 강의 조회 (테스트)
                 /*
                 .andRoute(POST("/lecture/operator/show"), lectureHandler::showLectureYnHandler)             // 강의 노출, 강의 노출 종료

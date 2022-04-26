@@ -55,33 +55,26 @@ public class LectureServiceImpl implements LectureService {
 
     // 강의 개설
     @Override
-    public Mono<Lecture> createLecture(Map<String, Object> param) {
-
-        String lectureId = UUID.randomUUID().toString();
-        String lectureName = (String) param.get("lectureName");
-        return lectureRepository.save(
-                new Lecture(lectureId, lectureName, "", "", false, 0, LocalDateTime.now(), LocalDateTime.now()));
+    public Mono<Lecture> createLecture(Lecture lecture) {
+        String lectureName = lecture.getLectureName();
+        String memberName = lecture.getMemberName();
+        return lectureRepository.save(new Lecture(null, lectureName, 0, memberName, false, 0, LocalDateTime.now(), LocalDateTime.now()));
     }
 
     // 강의에 강사 매칭
     @Override
-    public Mono<Lecture> matchingLecture(Map<String, Object> param) {
-        return lectureRepository.findByLectureId((String) param.get("lectureId"))
-                .flatMap(data -> setTeacherData(data, param));
-    }
-
-    private Mono<Lecture> setTeacherData(Lecture lecture, Map<String, Object> param) {
-        lecture.setLectureId((String) param.get("lectureId"));
-        lecture.setMemberId((String) param.get("teacherId"));
-        lecture.setLectureName((String) param.get("teacherName"));
-        lecture.setUpdateDt(LocalDateTime.now());
-        return lectureRepository.save(lecture);
+    public Mono<Lecture> matchingLecture(Lecture lecture) {
+        return lectureRepository.findById(lecture.getLectureId())
+                .doOnNext(data-> data.setMemberName(lecture.getMemberName()))
+                .flatMap(lectureRepository::save)
+                .log()
+                ;
     }
 
     // 강의 아이디로 강의 조회 (테스트)
     @Override
-    public Mono<Lecture> getLecture(String lectureId) {
-        return lectureRepository.findByLectureId(lectureId);
+    public Mono<Lecture> getLecture(Integer lectureId) {
+        return lectureRepository.findById(lectureId);
     }
 
 }

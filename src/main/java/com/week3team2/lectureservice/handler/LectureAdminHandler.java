@@ -19,8 +19,10 @@ public class LectureAdminHandler {
 
     // 강의개설
     public Mono<ServerResponse> createLecture(ServerRequest request) {
-
-        Mono<Lecture> lectureMono = request.bodyToMono(Map.class)
+//        Mono<String> test = request.headers().
+        String jwt = request.headers().firstHeader("Authorization");
+        System.out.println(jwt);
+        Mono<Lecture> lectureMono = request.bodyToMono(Lecture.class)
                 .flatMap(lectureService::createLecture)
                 .log()
                 ;
@@ -35,8 +37,10 @@ public class LectureAdminHandler {
     // 강사 매칭
     public Mono<ServerResponse> matchingLecture(ServerRequest request) {
 
-        Mono<Lecture> lectureMono = request.bodyToMono(Map.class)
-                .flatMap(lectureService::matchingLecture);
+        Mono<Lecture> lectureMono = request.bodyToMono(Lecture.class)
+                .flatMap(lectureService::matchingLecture)
+                .log()
+                ;
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -48,7 +52,7 @@ public class LectureAdminHandler {
     // 강의id로 강의조회
     public Mono<ServerResponse> getLecture(ServerRequest request) {
 
-        Mono<Lecture> lectureMono = lectureService.getLecture(request.queryParam("lectureId").get());
+        Mono<Lecture> lectureMono = lectureService.getLecture(Integer.valueOf(request.queryParam("lectureId").get()));
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
