@@ -55,6 +55,12 @@ public class LectureServiceImpl implements LectureService {
         return lectureRepository.findAll();
     }
 
+    // 학생 회원이 제출한 별점을 열람
+    @Override
+    public Mono<Lecture> getLectureTotalScore(String lectureId) {
+        return lectureRepository.getTotalScore(lectureId);
+    }
+
     // 강의 개설
     @Override
     public Mono<Lecture> createLecture(Lecture lecture) {
@@ -77,6 +83,12 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public Mono<Lecture> getLecture(Integer lectureId) {
         return lectureRepository.findById(lectureId);
+    }
+
+    // 강의를 학생 회원에게 노출 및 종료
+    @Override
+    public Mono<Lecture> changeLectureShowYn(Lecture lecture) {
+        return lectureRepository.changeLectureShowYn(lecture.getLectureId(), lecture.getLectureShowYn());
     }
 
 }

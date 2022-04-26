@@ -30,6 +30,7 @@ public interface LectureService {
     Mono<Lecture> getLecture(Integer lectureId);
 
     // 강의를 학생 회원에게 노출 및 종료
+    Mono<Lecture> changeLectureShowYn(Lecture lecture);
 
     // 강의를 선택해서 수강 신청
 
@@ -41,4 +42,5 @@ public interface LectureService {
     // 수강한 강의에 별점 남기기
 
     // 학생 회원이 제출한 별점을 열람
+    Mono<Lecture> getLectureTotalScore(String lectureId);
 }
