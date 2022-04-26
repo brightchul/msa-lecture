@@ -7,31 +7,27 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Builder
 @ToString
 @AllArgsConstructor
-@NoArgsConstructor
 @Table(value = "lectureContent")
 public class LectureContent {
 
     @Id
-    @Column(value = "contentId")
-    String contentId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
 
-    @Column(value ="contentName")
     String contentName;
 
-    @Column(value ="contentBody")
     String contentBody;
 
-    @Column(value = "lectureId")
-    String lectureId;
+    Integer lectureId;
 
-    @Column(value = "contentType")
     String contentType;
 
     @CreatedDate
