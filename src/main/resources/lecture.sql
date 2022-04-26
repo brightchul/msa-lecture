@@ -28,5 +28,5 @@ create table IF NOT EXISTS lectureInfo
     );
 
 INSERT INTO lecture VALUES (0, 'testName', 0, 'teacherName', false, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO lectureInfo VALUES (0, 0, 0, 0, "수강중", 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO lectureInfo VALUES (0, 0, 0, 0, '수강중', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
