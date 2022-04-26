@@ -16,4 +16,10 @@ public interface LectureRepository extends ReactiveCrudRepository<Lecture, Integ
     @Query("select * from lecture where memberId = :memberId")
     Mono<Lecture> findByMemberId(String memberId);
 
+    @Query("update lecture set lectureShowYn = :lectureShowYn where lectureId = :lectureId")
+    Mono<Lecture> changeLectureShowYn(Integer lectureId, Boolean lectureShowYn);
+
+    // 강의 테이블(LECTURE)의 lecture_total_score 컬럼 데이터를 조회
+    @Query("select * from lecture where lectureId = :lectureId")
+    Mono<Lecture> getTotalScore(String lectureId);
 }
