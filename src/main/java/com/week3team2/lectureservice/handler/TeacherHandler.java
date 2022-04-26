@@ -34,7 +34,7 @@ public class TeacherHandler {
     public Mono<ServerResponse> updateNewTest(ServerRequest request) {
 
         Mono<LectureContent> lectureMono = request.bodyToMono(LectureContent.class)
-                .flatMap(lectureService::updateNewExam);
+                .flatMap(lectureService::updateNewExam).log();
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -46,7 +46,7 @@ public class TeacherHandler {
     public Mono<ServerResponse> uploadContent(ServerRequest request) {
 
         Mono<LectureContent> lectureMono = request.bodyToMono(LectureContent.class)
-                .flatMap(lectureService::uploadContent);
+                .flatMap(lectureService::uploadContent).log();
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -57,8 +57,8 @@ public class TeacherHandler {
     // 강사에 매칭된 강의 목록 조회
     public Mono<ServerResponse> getLectureOnTeacher(ServerRequest request) {
 
-        Mono<Lecture> lectureMono = request.bodyToMono(Lecture.class)
-                .flatMap(lectureService::getLectureOnTeacher);
+        Mono<Lecture> lectureMono = request.bodyToMono(Map.class)
+                .flatMap(lectureService::getLectureOnTeacher).log();
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)

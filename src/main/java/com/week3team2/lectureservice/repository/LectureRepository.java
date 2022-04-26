@@ -13,4 +13,7 @@ public interface LectureRepository extends ReactiveCrudRepository<Lecture, Integ
     @Query("select * from lecture where lectureId = :lectureId")
     Mono<Lecture> findByLectureId(String lectureId);
 
+    @Query("select * from lecture where memberId = :memberId")
+    Mono<Lecture> findByMemberId(String memberId);
+
 }
