@@ -21,13 +21,13 @@ public interface LectureService {
     Mono<Lecture> getLectureOnTeacher(Lecture lecture);
 
     // 강의 개설
-    Mono<Lecture> createLecture(Map<String, Object> param);
+    Mono<Lecture> createLecture(Lecture lecture);
 
     // 강의에 강사 매칭
-    Mono<Lecture> matchingLecture(Map<String, Object> param);
+    Mono<Lecture> matchingLecture(Lecture lecture);
 
     // 강의 아이디로 강의 조회 (테스트)
-    Mono<Lecture> getLecture(String lectureId);
+    Mono<Lecture> getLecture(Integer lectureId);
 
     // 강의를 학생 회원에게 노출 및 종료
 

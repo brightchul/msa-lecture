@@ -15,19 +15,19 @@ import java.time.LocalDateTime;
 public class LectureInfo {
     @Id
     @Column(value = "lectureInfoId")
-    private String lectureInfoId;
+    private Integer lectureInfoId;
 
     @Column(value = "lectureId")
-    private String lectureId;
+    private Integer lectureId;
 
     @Column(value ="memberId")
-    private String memberId;
+    private Integer memberId;
 
     @Column(value ="testScore")
-    private String testScore;
+    private Integer testScore;
 
-    @Column(value="lectureState")
-    private LectureInfoState lectureState;
+    @Column(value="lectureInfoState")
+    private String LectureInfoState;
 
     @Column(value ="lectureScore")
     private Integer lectureScore;
