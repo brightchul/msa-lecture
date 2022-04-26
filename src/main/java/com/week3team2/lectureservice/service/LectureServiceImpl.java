@@ -2,12 +2,12 @@ package com.week3team2.lectureservice.service;
 
 import com.week3team2.lectureservice.entity.Lecture;
 import com.week3team2.lectureservice.entity.LectureContent;
+import com.week3team2.lectureservice.entity.LectureInfo;
 import com.week3team2.lectureservice.repository.LectureContentRepository;
+import com.week3team2.lectureservice.repository.LectureInfoRepository;
 import com.week3team2.lectureservice.repository.LectureRepository;
 
 import java.time.LocalDateTime;
-import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -18,10 +18,12 @@ public class LectureServiceImpl implements LectureService {
 
     private final LectureRepository lectureRepository;
     private final LectureContentRepository lectureContentRepository;
+    private final LectureInfoRepository lectureInfoRepository;
 
-    public LectureServiceImpl(LectureRepository lectureRepository, LectureContentRepository lectureContentRepository) {
+    public LectureServiceImpl(LectureRepository lectureRepository, LectureContentRepository lectureContentRepository, LectureInfoRepository lectureInfoRepository) {
         this.lectureRepository = lectureRepository;
         this.lectureContentRepository = lectureContentRepository;
+        this.lectureInfoRepository = lectureInfoRepository;
     }
 
     // 수강자 성적 입력
@@ -59,6 +61,12 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public Mono<Lecture> getLectureTotalScore(String lectureId) {
         return lectureRepository.getTotalScore(lectureId);
+    }
+
+    // 강사가 시험성적 값 반영(업데이트)
+    @Override
+    public Mono<LectureInfo> updateTestScore(LectureInfo lectureInfo) {
+        return lectureInfoRepository.updateTestScore(lectureInfo.getTestScore(), lectureInfo.getLectureId(), lectureInfo.getMemberId());
     }
 
     // 강의 개설

@@ -2,6 +2,7 @@ package com.week3team2.lectureservice.handler;
 
 import com.week3team2.lectureservice.entity.Lecture;
 import com.week3team2.lectureservice.entity.LectureContent;
+import com.week3team2.lectureservice.entity.LectureInfo;
 import com.week3team2.lectureservice.service.LectureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -59,6 +60,18 @@ public class TeacherHandler {
 
         Mono<Lecture> lectureMono = request.bodyToMono(Lecture.class)
                 .flatMap(lectureService::getLectureOnTeacher);
+
+        return ServerResponse.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(lectureMono, Lecture.class)
+                .onErrorResume(error -> ServerResponse.badRequest().build());
+    }
+
+    // 강사가 시험성적 업데이트
+    public Mono<ServerResponse> updateTestScore(ServerRequest request) {
+
+        Mono<LectureInfo> lectureMono = request.bodyToMono(LectureInfo.class)
+                .flatMap(lectureService::updateTestScore);
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
