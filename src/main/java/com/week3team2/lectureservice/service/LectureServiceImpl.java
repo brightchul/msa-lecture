@@ -10,7 +10,7 @@ import com.week3team2.lectureservice.repository.LectureRepository;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -47,7 +47,6 @@ public class LectureServiceImpl implements LectureService {
     public Mono<LectureContent> uploadContent(LectureContent lectureContent) {
         lectureContent.setContentType("lecture");
         return lectureContentRepository.save(lectureContent);
-    }
 
     // 강사에 매칭된 강의 목록 조회
     @Override
@@ -95,29 +94,6 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public Mono<Lecture> changeLectureShowYn(Lecture lecture) {
         return lectureRepository.changeLectureShowYn(lecture.getLectureId(), lecture.getLectureShowYn());
-    }
-
-    // 수강한 강의에 별점 남기기
-    @Override
-    public Mono<LectureInfo> setLectureScore(LectureInfo lectureInfo) {
-
-        return lectureInfoRepository.findByLectureInfo(lectureInfo.getLectureId(), lectureInfo.getMemberId())
-                .doOnNext(data-> data.setLectureScore(lectureInfo.getLectureScore()))
-                .doOnNext(this::setLectureTotalScore)
-                .flatMap(lectureInfoRepository::save)
-                .log();
-    }
-
-    private void setLectureTotalScore(LectureInfo lectureinfo){
-
-        Flux<LectureInfo> test = lectureInfoRepository.findByLectureInfoList(lectureinfo.getLectureId())
-                .log()
-                ;
-
-
-        Mono<Double> average = test.collect(Collectors.averagingInt(LectureInfo::getLectureScore))
-                .log()
-                ;
     }
 
 }
