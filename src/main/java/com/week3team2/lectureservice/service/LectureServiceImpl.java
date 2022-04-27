@@ -6,8 +6,6 @@ import com.week3team2.lectureservice.repository.LectureContentRepository;
 import com.week3team2.lectureservice.repository.LectureRepository;
 
 import java.time.LocalDateTime;
-import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

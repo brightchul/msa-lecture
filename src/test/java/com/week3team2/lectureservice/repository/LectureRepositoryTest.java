@@ -22,7 +22,8 @@ class LectureRepositoryTest {
     void readsAllEntitiesCorrectly() {
         StepVerifier.create(repository.findAll())
                 .assertNext(o -> assertEquals(o.getLectureName(), "testName"))
-                .assertNext(o -> assertEquals(o.getLectureName(), "테스트강의"))
+                .assertNext(o -> assertEquals(o.getLectureName(), "testName"))
+                .assertNext(o -> assertEquals(o.getLectureName(), "testName"))
                 .verifyComplete();
     }
 

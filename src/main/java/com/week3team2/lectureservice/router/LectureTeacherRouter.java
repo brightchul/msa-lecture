@@ -17,8 +17,8 @@ public class LectureTeacherRouter {
     public RouterFunction<ServerResponse> route2(TeacherHandler teacherHandler) {
         return RouterFunctions
                 .route(POST("/lecture/content/exam").and(accept(MediaType.APPLICATION_JSON)), teacherHandler::updateNewTest)   // 시험 컨텐츠 생성
-                .andRoute(POST("/lecture/content/lecture").and(accept(MediaType.APPLICATION_JSON)), teacherHandler::uploadContent) // 강의 컨텐츠 생성
-                .andRoute(POST("/lecture/matching").and(accept(MediaType.APPLICATION_JSON)), teacherHandler::getLectureOnTeacher) // 강사에 매칭된 강의목록 조회
+                .andRoute(POST("/lecture/content").and(accept(MediaType.APPLICATION_JSON)), teacherHandler::uploadContent) // 강의 컨텐츠 생성
+                .andRoute(GET("/lecture/matching/{teacherId}").and(accept(MediaType.APPLICATION_JSON)), teacherHandler::getLectureOnTeacher) // 강사에 매칭된 강의목록 조회
                 ;
     }
 }
