@@ -42,13 +42,6 @@ public class LectureServiceImpl implements LectureService {
         return lectureContentRepository.save(lectureContent);
     }
 
-    // 강사에 매칭된 강의 목록 조회
-    @Override
-    public Mono<Lecture> getLectureOnTeacher(Map<String, Object> param) {
-        String teacherId = (String) param.get("teacherId");
-        return lectureRepository.findByMemberId(teacherId);
-    }
-
     @Override
     public Flux<Lecture> getLectureAllList() {
         return lectureRepository.findAll();

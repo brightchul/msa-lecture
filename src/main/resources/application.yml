@@ -31,3 +31,8 @@ eureka:
       defualtZone: http://localhost:8761/eureka/ # 유레카 클라이언트가 서비스를 등록할 때 주소를 지정하기 위해 사용
     register-with-eureka: true # 유레카 서버에 본인 서비스를 등록할 건지 여부
     fetch-registry: true # 유레카 서버로부터 서비스 목록을 로컬 캐시에 저장할 건지 여부
+
+springdoc:
+  api-docs:
+    groups:
+      enabled: true

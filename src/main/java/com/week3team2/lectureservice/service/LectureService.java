@@ -16,9 +16,6 @@ public interface LectureService {
     // 강의 컨텐츠 업로드
     Mono<LectureContent> uploadContent(LectureContent lectureContent);
 
-    // 강사에 매칭된 강의 목록 조회
-    Mono<Lecture> getLectureOnTeacher(Map<String, Object> param);
-
     // 강의 개설
     Mono<Lecture> createLecture(Lecture lecture);
 
