@@ -16,6 +16,8 @@ public interface LectureInfoRepository extends ReactiveCrudRepository<LectureInf
     @Query("select * from lectureInfo where lectureId=:lectureId")
     Flux<LectureInfo> findByLectureInfoList(Integer lectureId);
 
-    @Query("update lectureInfo set testScore = :testScore where lectureId = :lectureId and memberId = :memberId")
-    Mono<LectureInfo> updateTestScore(Integer testScore, Integer lectureId, Integer memberId);
+    // 강의정보 테이블에 test_score(시험점수) 값을 설정한다.
+    // (현재) where 조건으로 memberId, lectureId를 주고, 데이터를 update
+    @Query("update lectureInfo set testScore = :score where lectureId = :lectureId and memberId = :memberId")
+    Mono<LectureInfo> updateTestScore(Integer score, Integer lectureId, Integer memberId);
 }

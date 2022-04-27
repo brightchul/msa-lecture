@@ -67,7 +67,7 @@ public class LectureServiceImpl implements LectureService {
     public Mono<LectureInfo> setLectureScore(LectureInfo lectureInfo) {
         return lectureInfoRepository.findByLectureInfo(lectureInfo.getLectureId(), lectureInfo.getMemberId())
                 .doOnNext(data-> data.setLectureScore(lectureInfo.getLectureScore()))
-                .doOnNext(this::setLectureTotalScore)
+                .doOnNext(data-> data.setUpdateDt(LocalDateTime.now()))
                 .flatMap(lectureInfoRepository::save)
                 .log();
     }
@@ -97,6 +97,7 @@ public class LectureServiceImpl implements LectureService {
     public Mono<Lecture> matchingLecture(Lecture lecture) {
         return lectureRepository.findById(lecture.getLectureId())
                 .doOnNext(data-> data.setMemberName(lecture.getMemberName()))
+                .doOnNext(data-> data.setUpdateDt(LocalDateTime.now()))
                 .flatMap(lectureRepository::save)
                 .log()
                 ;
@@ -114,15 +115,22 @@ public class LectureServiceImpl implements LectureService {
         return lectureRepository.changeLectureShowYn(lecture.getLectureId(), lecture.getLectureShowYn());
     }
 
-    private void setLectureTotalScore(LectureInfo lectureinfo){
-
-        Flux<LectureInfo> test = lectureInfoRepository.findByLectureInfoList(lectureinfo.getLectureId())
-                .log()
-                ;
-
-        Mono<Double> average = test.collect(Collectors.averagingInt(LectureInfo::getLectureScore))
-                .log()
-                ;
+    // 강의를 선택해서 수강 신청 (수강정보 : LectureInfo 생성)
+    @Override
+    public Mono<LectureInfo> enrolment(LectureInfo lectureInfo){
+        Integer lectureId = lectureInfo.getLectureId();
+        Integer memberId = lectureInfo.getMemberId();
+        return lectureInfoRepository.findByLectureInfo(lectureId, memberId)
+                .hasElement()
+                .flatMap(data -> {
+                            if (data){
+                                return Mono.just(lectureInfo); // 중복시 빈값.. 처리필요
+                            }
+                            else{
+                                return this.lectureInfoRepository.save(new LectureInfo(null, lectureId, memberId, 0, LectureInfoState.ENROLMENT.getName(), 0, LocalDateTime.now(), LocalDateTime.now()));
+                            }
+                        }
+                );
     }
 
 }
