@@ -74,7 +74,7 @@ public class LectureServiceImpl implements LectureService {
 
     // 학생 회원이 제출한 별점을 열람
     @Override
-    public Mono<Lecture> getLectureTotalScore(String lectureId) {
+    public Mono<Lecture> getLectureTotalScore(Integer lectureId) {
         return lectureRepository.getTotalScore(lectureId);
     }
 
