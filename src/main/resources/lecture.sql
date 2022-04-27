@@ -27,6 +27,10 @@ create table IF NOT EXISTS lectureInfo
     PRIMARY KEY (lectureInfoId)
     );
 
-INSERT INTO lecture VALUES (0, 'testName', 0, 'teacherName', false, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO lecture VALUES (1, 'testName', 1, 'teacherName', false, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO lecture VALUES (2, 'testName', 1, 'teacherName', false, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO lecture VALUES (3, 'testName', 1, 'teacherName', false, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO lecture VALUES (4, 'testName', 2, 'teacherName', false, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO lecture VALUES (5, 'testName', 3, 'teacherName', false, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO lectureInfo VALUES (0, 0, 0, 0, '수강중', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
