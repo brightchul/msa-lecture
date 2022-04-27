@@ -2,10 +2,16 @@ package com.week3team2.lectureservice.service;
 
 import com.week3team2.lectureservice.entity.Lecture;
 import com.week3team2.lectureservice.entity.LectureContent;
+import com.week3team2.lectureservice.entity.LectureInfo;
+import com.week3team2.lectureservice.entity.LectureInfoState;
 import com.week3team2.lectureservice.repository.LectureContentRepository;
+import com.week3team2.lectureservice.repository.LectureInfoRepository;
 import com.week3team2.lectureservice.repository.LectureRepository;
 
 import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -16,10 +22,12 @@ public class LectureServiceImpl implements LectureService {
 
     private final LectureRepository lectureRepository;
     private final LectureContentRepository lectureContentRepository;
+    private final LectureInfoRepository lectureInfoRepository;
 
-    public LectureServiceImpl(LectureRepository lectureRepository, LectureContentRepository lectureContentRepository) {
+    public LectureServiceImpl(LectureRepository lectureRepository, LectureContentRepository lectureContentRepository, LectureInfoRepository lectureInfoRepository) {
         this.lectureRepository = lectureRepository;
         this.lectureContentRepository = lectureContentRepository;
+        this.lectureInfoRepository = lectureInfoRepository;
     }
 
     // 수강자 성적 입력
@@ -42,9 +50,26 @@ public class LectureServiceImpl implements LectureService {
         return lectureContentRepository.save(lectureContent);
     }
 
+    // 강사에 매칭된 강의 목록 조회
+    @Override
+    public Mono<Lecture> getLectureOnTeacher(Map<String, Object> param) {
+        String teacherId = (String) param.get("teacherId");
+        return lectureRepository.findByMemberId(teacherId);
+    }
+
     @Override
     public Flux<Lecture> getLectureAllList() {
         return lectureRepository.findAll();
+    }
+
+    // 수강한 강의에 별점 남기기
+    @Override
+    public Mono<LectureInfo> setLectureScore(LectureInfo lectureInfo) {
+        return lectureInfoRepository.findByLectureInfo(lectureInfo.getLectureId(), lectureInfo.getMemberId())
+                .doOnNext(data-> data.setLectureScore(lectureInfo.getLectureScore()))
+                .doOnNext(this::setLectureTotalScore)
+                .flatMap(lectureInfoRepository::save)
+                .log();
     }
 
     // 학생 회원이 제출한 별점을 열람
@@ -81,6 +106,17 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public Mono<Lecture> changeLectureShowYn(Lecture lecture) {
         return lectureRepository.changeLectureShowYn(lecture.getLectureId(), lecture.getLectureShowYn());
+    }
+
+    private void setLectureTotalScore(LectureInfo lectureinfo){
+
+        Flux<LectureInfo> test = lectureInfoRepository.findByLectureInfoList(lectureinfo.getLectureId())
+                .log()
+                ;
+
+        Mono<Double> average = test.collect(Collectors.averagingInt(LectureInfo::getLectureScore))
+                .log()
+                ;
     }
 
 }
