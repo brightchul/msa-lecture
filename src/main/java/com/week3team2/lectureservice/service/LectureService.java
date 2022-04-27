@@ -33,7 +33,8 @@ public interface LectureService {
     // 강의를 학생 회원에게 노출 및 종료
     Mono<Lecture> changeLectureShowYn(Lecture lecture);
 
-    // 강의를 선택해서 수강 신청
+    // 강의를 선택해서 수강 신청 (수강정보 : LectureInfo 생성)
+    Mono<LectureInfo> enrolment(LectureInfo lectureInfo);
 
     // 수강한 강의의 목록 조회
     Flux<Lecture> getLectureAllList();
@@ -45,4 +46,7 @@ public interface LectureService {
 
     // 학생 회원이 제출한 별점을 열람
     Mono<Lecture> getLectureTotalScore(String lectureId);
+
+    // 강사가 시험성적 업데이트
+    Mono<LectureInfo> updateTestScore(LectureInfo lectureInfo);
 }
