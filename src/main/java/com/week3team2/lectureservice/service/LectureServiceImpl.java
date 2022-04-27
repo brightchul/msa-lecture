@@ -101,7 +101,7 @@ public class LectureServiceImpl implements LectureService {
 
         return lectureInfoRepository.findByLectureInfo(lectureInfo.getLectureId(), lectureInfo.getMemberId())
                 .doOnNext(data-> data.setLectureScore(lectureInfo.getLectureScore()))
-//                .doOnNext(this::setLectureTotalScore)
+                .doOnNext(this::setLectureTotalScore)
                 .flatMap(lectureInfoRepository::save)
                 .log();
     }
@@ -111,6 +111,7 @@ public class LectureServiceImpl implements LectureService {
         Flux<LectureInfo> test = lectureInfoRepository.findByLectureInfoList(lectureinfo.getLectureId())
                 .log()
                 ;
+
 
         Mono<Double> average = test.collect(Collectors.averagingInt(LectureInfo::getLectureScore))
                 .log()

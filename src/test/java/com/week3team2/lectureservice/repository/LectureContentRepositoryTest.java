@@ -13,19 +13,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class LectureContentRepositoryTest {
 
-    private WebTestClient webTestClient;
-
     @Autowired
     LectureContentRepository lectureContentRepository;
 
-    @Autowired
-    private TeacherHandler teacherHandler;
-
     @Test
-    void readsAllEntitiesCorrectly() {
+    void readsAllContentsCorrectly() {
         StepVerifier.create(lectureContentRepository.findAll())
-                .assertNext(o -> assertEquals(o.getContentName(), "test1"))
-                .assertNext(o -> assertEquals(o.getContentName(), "test2"))
+                .assertNext(o -> assertEquals("test1", o.getContentName()))
+                .assertNext(o -> assertEquals("test2", o.getContentName()))
+                .assertNext(o -> assertEquals("test2", o.getContentName()))
                 .verifyComplete();
     }
 
