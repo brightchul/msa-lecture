@@ -1,12 +1,12 @@
 create table IF NOT EXISTS lectureContent
 (
     id int NOT NULL AUTO_INCREMENT,
-    content_name VARCHAR(255) NOT NULL,
-    content_body TEXT NOT NULL,
-    lecture_id int NOT NULL,
-    content_type VARCHAR(255) NOT NULL,
-    insert_dt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    update_dt DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    contentName VARCHAR(255) NOT NULL,
+    contentBody TEXT NOT NULL,
+    lectureId int NOT NULL,
+    contentType VARCHAR(255) NOT NULL,
+    insertDt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updateDt DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
 
     PRIMARY KEY (id)
 );

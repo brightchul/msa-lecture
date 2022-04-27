@@ -19,20 +19,24 @@ import java.time.LocalDateTime;
 public class LectureContent {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(value ="id")
     Integer id;
 
+    @Column(value ="contentName")
     String contentName;
 
+    @Column(value ="contentBody")
     String contentBody;
 
+    @Column(value ="lectureId")
     Integer lectureId;
 
+    @Column(value ="contentType")
     String contentType;
 
-    @CreatedDate
+    @Column(value ="insertDt")
     private LocalDateTime insertDt;
 
-    @LastModifiedDate
+    @Column(value ="updateDt")
     private LocalDateTime updateDt;
 }

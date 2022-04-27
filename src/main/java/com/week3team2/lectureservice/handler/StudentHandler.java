@@ -1,6 +1,7 @@
 package com.week3team2.lectureservice.handler;
 
 import com.week3team2.lectureservice.entity.Lecture;
+import com.week3team2.lectureservice.entity.LectureContent;
 import com.week3team2.lectureservice.entity.LectureInfo;
 import com.week3team2.lectureservice.service.LectureService;
 import lombok.RequiredArgsConstructor;
@@ -44,4 +45,17 @@ public class StudentHandler {
                 ;
     }
 
+    // 수강 신청한 강의 컨텐츠 열람
+    public Mono<ServerResponse> getLectureContents(ServerRequest request) {
+        Mono<LectureContent> LectureContentMono = request.bodyToMono(LectureInfo.class)
+                .flatMap(lectureService::getLectureContents)
+                .log()
+                ;
+
+        return ServerResponse.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(LectureContentMono, LectureContent.class)
+                .onErrorResume(error -> ServerResponse.badRequest().build())
+                ;
+    }
 }

@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 @Component
 public interface LectureInfoRepository extends ReactiveCrudRepository<LectureInfo, Integer> {
 
-    @Query("select * from lectureInfo where lectureId=:lectureId and memberId=memberId")
+    @Query("select * from lectureInfo where lectureId=:lectureId and memberId=:memberId")
     Mono<LectureInfo> findByLectureInfo(Integer lectureId, Integer memberId);
 
     @Query("select * from lectureInfo where lectureId=:lectureId")
