@@ -78,7 +78,7 @@ public class LectureServiceImpl implements LectureService {
         return lectureRepository.getTotalScore(lectureId);
     }
 
-    // 강사가 시험성적 값 반영(업데이트)
+    // 강사가 강의정보 테이블에 있는 testScore(시험점수) 값을 업데이트한다.
     @Override
     public Mono<LectureInfo> updateTestScore(LectureInfo lectureInfo) {
         return lectureInfoRepository.updateTestScore(lectureInfo.getTestScore(), lectureInfo.getLectureId(), lectureInfo.getMemberId());
