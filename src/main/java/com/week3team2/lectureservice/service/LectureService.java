@@ -43,6 +43,7 @@ public interface LectureService {
     Flux<Lecture> getLectureAllList();
 
     // 수강 신청한 강의 컨텐츠 열람
+    Mono<LectureContent> getLectureContents(LectureInfo lectureInfo);
 
     // 수강한 강의에 별점 남기기
     Mono<LectureInfo> setLectureScore(LectureInfo lectureInfo);

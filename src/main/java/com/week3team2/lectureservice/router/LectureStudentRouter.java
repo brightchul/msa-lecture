@@ -1,5 +1,6 @@
 package com.week3team2.lectureservice.router;
 
+import com.week3team2.lectureservice.entity.LectureContent;
 import com.week3team2.lectureservice.entity.LectureInfo;
 import com.week3team2.lectureservice.handler.StudentHandler;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,6 +41,15 @@ public class LectureStudentRouter {
                                     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = LectureInfo.class))),
                                     @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = LectureInfo.class)))}
                                     , requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = LectureInfo.class))))
+                    ),
+
+                    @RouterOperation(path = "/lecture/student/getContents", produces = {
+                            MediaType.APPLICATION_JSON_VALUE},
+                            beanClass = StudentHandler.class, method = RequestMethod.POST, beanMethod = "getContents",
+                            operation = @Operation(operationId = "getContents", responses = {
+                                    @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = LectureContent.class))),
+                                    @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = LectureContent.class)))}
+                                    , requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = LectureContent.class))))
                     )
             }
     )
@@ -49,6 +59,7 @@ public class LectureStudentRouter {
         return RouterFunctions
                 .route(POST("/lecture/student/setScore"), studentHandler::setLectureScore)              // 수강한 강의에 별점 남기기
                 .andRoute(POST("/lecture/student/enrolment"), studentHandler::enrolment)                // 강의를 선택해서 수강 신청 (수강정보 : LectureInfo 생성)
+                .andRoute(POST("/lecture/student/getContents"), studentHandler::getLectureContents)
                 ;
     }
 }

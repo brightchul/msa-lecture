@@ -133,4 +133,9 @@ public class LectureServiceImpl implements LectureService {
                 );
     }
 
+    // 수강 신청한 강의 컨텐츠 열람
+    public Mono<LectureContent> getLectureContents(LectureInfo lectureInfo){
+        return lectureContentRepository.getContents(lectureInfo.getLectureId());
+    };
+
 }
