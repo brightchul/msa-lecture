@@ -9,6 +9,7 @@ import com.week3team2.lectureservice.repository.LectureInfoRepository;
 import com.week3team2.lectureservice.repository.LectureRepository;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -50,8 +51,9 @@ public class LectureServiceImpl implements LectureService {
 
     // 강사에 매칭된 강의 목록 조회
     @Override
-    public Mono<Lecture> getLectureOnTeacher(Lecture lecture) {
-        return null;
+    public Mono<Lecture> getLectureOnTeacher(Map<String, Object> param) {
+        String teacherId = (String) param.get("teacherId");
+        return lectureRepository.findByMemberId(teacherId);
     }
 
     @Override

@@ -19,7 +19,9 @@ public class LectureAdminHandler {
 
     // 강의개설
     public Mono<ServerResponse> createLecture(ServerRequest request) {
-//        String jwt = request.headers().firstHeader("Authorization");
+//        Mono<String> test = request.headers().
+        String jwt = request.headers().firstHeader("Authorization");
+        System.out.println(jwt);
         Mono<Lecture> lectureMono = request.bodyToMono(Lecture.class)
                 .flatMap(lectureService::createLecture)
                 .log()
