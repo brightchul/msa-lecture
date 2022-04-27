@@ -10,8 +10,6 @@ import com.week3team2.lectureservice.repository.LectureRepository;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -74,7 +72,7 @@ public class LectureServiceImpl implements LectureService {
 
     // 학생 회원이 제출한 별점을 열람
     @Override
-    public Mono<Lecture> getLectureTotalScore(String lectureId) {
+    public Mono<Lecture> getLectureTotalScore(Integer lectureId) {
         return lectureRepository.getTotalScore(lectureId);
     }
 

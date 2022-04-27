@@ -28,10 +28,10 @@ create table IF NOT EXISTS lectureInfo
     );
 
 INSERT INTO lecture VALUES (1, 'testName', 1, 'teacherName', false, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO lecture VALUES (2, 'testName', 1, 'teacherName', false, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO lecture VALUES (3, 'testName', 1, 'teacherName', false, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO lecture VALUES (4, 'testName', 2, 'teacherName', false, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO lecture VALUES (5, 'testName', 3, 'teacherName', false, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO lecture VALUES (2, 'testName', 1, 'teacherName', false, 4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO lecture VALUES (3, 'testName', 1, 'teacherName', false, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO lecture VALUES (4, 'testName', 2, 'teacherName', false, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO lecture VALUES (5, 'testName', 3, 'teacherName', false, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO lectureInfo VALUES (0, 1, 0, 0, '수강중', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO lectureInfo VALUES (1, 1, 1, 0, '수강중', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO lectureInfo VALUES (2, 1, 2, 0, '수강중', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
