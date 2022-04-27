@@ -75,4 +75,5 @@ public class StudentHandler {
                         .body(lectureInfo, LectureInfo.class)
                         .switchIfEmpty(notFound));
     }
+
 }

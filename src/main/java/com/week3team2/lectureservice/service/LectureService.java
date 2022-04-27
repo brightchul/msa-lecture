@@ -3,11 +3,9 @@ package com.week3team2.lectureservice.service;
 import com.week3team2.lectureservice.entity.Lecture;
 import com.week3team2.lectureservice.entity.LectureContent;
 import com.week3team2.lectureservice.entity.LectureInfo;
-import com.week3team2.lectureservice.entity.LectureInfo;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Map;
 import java.util.Map;
 
 public interface LectureService {
