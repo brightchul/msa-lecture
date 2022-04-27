@@ -19,7 +19,7 @@ public class LectureAdminRouter {
                 .andRoute(POST("/lecture/admin/matching"), lectureAdminHandler::matchingLecture)       // 강사 매칭
                 .andRoute(GET("/lecture/getLecture"), lectureAdminHandler::getLecture)                 // 강의 조회 (테스트)
                 .andRoute(GET("/lecture/getTotalScore"), lectureAdminHandler::getLectureTotalScore)                 // 강의의 총 별점 조회
-                .andRoute(PATCH("/admin/lecture/show"), lectureAdminHandler::changeLectureShowYn)        // 강의 노출, 강의 노출 종료(PATCH)
+                .andRoute(PATCH("/lecture/admin/show"), lectureAdminHandler::changeLectureShowYn)        // 강의 노출, 강의 노출 종료(PATCH)
                 ;
     }
 }

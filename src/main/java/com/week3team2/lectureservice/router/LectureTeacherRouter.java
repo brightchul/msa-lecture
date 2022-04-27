@@ -58,6 +58,7 @@ public class LectureTeacherRouter {
                 .route(POST("/lecture/content/exam").and(accept(MediaType.APPLICATION_JSON)), teacherHandler::updateNewTest)   // 시험 컨텐츠 생성
                 .andRoute(POST("/lecture/content").and(accept(MediaType.APPLICATION_JSON)), teacherHandler::uploadContent) // 강의 컨텐츠 생성
                 .andRoute(GET("/lecture/matching/{teacherId}").and(accept(MediaType.APPLICATION_JSON)), teacherHandler::getLectureOnTeacher) // 강사에 매칭된 강의목록 조회
+                .andRoute(PATCH("/lecture/updateTestScore").and(accept(MediaType.APPLICATION_JSON)), teacherHandler::updateTestScore) // 강사가 시험점수를 반영
                 ;
     }
 }

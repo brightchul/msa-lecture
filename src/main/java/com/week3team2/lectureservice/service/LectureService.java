@@ -45,4 +45,8 @@ public interface LectureService {
 
     // 학생 회원이 제출한 별점을 열람
     Mono<Lecture> getLectureTotalScore(String lectureId);
+
+    // 강사가 시험점수값을 업데이트
+    Mono<LectureInfo> updateTestScore(LectureInfo lectureInfo);
+
 }
