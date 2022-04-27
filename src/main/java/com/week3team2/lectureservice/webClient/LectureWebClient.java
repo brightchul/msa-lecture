@@ -14,13 +14,4 @@ public class LectureWebClient {
     public LectureWebClient(WebClient.Builder builder) {
         this.client = builder.baseUrl("http://localhost:8083").build();
     }
-
-    public Mono getMemberInfo(Integer memId) {
-
-        return client.get()
-                .uri("/member/findMemberInfo/"+memId)
-                .retrieve()
-                .bodyToMono(HashMap.class);
-
-    }
 }
