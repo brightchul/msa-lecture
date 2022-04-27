@@ -79,7 +79,8 @@ public class LectureAdminHandler {
 
     // 학생 회원이 제출한 별점을 열람 API (특정 강의 ID에 해당하는 총 평점 조회)
     public Mono<ServerResponse> getLectureTotalScore(ServerRequest request) {
-        Mono<Lecture> lectureMono = lectureService.getLectureTotalScore(request.queryParam("lectureId").get());
+        Integer lectureId = Integer.valueOf(request.queryParam("lectureId").get());
+        Mono<Lecture> lectureMono = lectureService.getLectureTotalScore(lectureId);
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
