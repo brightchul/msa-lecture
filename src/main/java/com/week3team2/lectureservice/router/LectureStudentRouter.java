@@ -59,7 +59,8 @@ public class LectureStudentRouter {
         return RouterFunctions
                 .route(POST("/lecture/student/setScore"), studentHandler::setLectureScore)              // 수강한 강의에 별점 남기기
                 .andRoute(POST("/lecture/student/enrolment"), studentHandler::enrolment)                // 강의를 선택해서 수강 신청 (수강정보 : LectureInfo 생성)
-                .andRoute(POST("/lecture/student/getContents"), studentHandler::getLectureContents)
+                .andRoute(POST("/lecture/student/getContents"), studentHandler::getLectureContents)     // 컨텐츠 조회
+                .andRoute(GET("/lecture/student/getLectureOnTeacher/{memberId}"), studentHandler::getLectureOnTeacher)  // 수강한 강의의 목록 조회
                 ;
     }
 }

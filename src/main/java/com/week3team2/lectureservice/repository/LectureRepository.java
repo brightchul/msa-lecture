@@ -21,6 +21,7 @@ public interface LectureRepository extends ReactiveCrudRepository<Lecture, Integ
     Mono<Lecture> changeLectureShowYn(Integer lectureId, Boolean lectureShowYn);
 
     // 강의 테이블(LECTURE)의 lecture_total_score 컬럼 데이터를 조회
+
     @Query("select lectureTotalScore from lecture where lectureId = :lectureId")
     Mono<Lecture> getTotalScore(Integer lectureId);
 

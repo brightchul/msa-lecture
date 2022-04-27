@@ -1,5 +1,6 @@
 package com.week3team2.lectureservice.repository;
 
+import com.week3team2.lectureservice.entity.Lecture;
 import com.week3team2.lectureservice.entity.LectureInfo;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
@@ -20,4 +21,7 @@ public interface LectureInfoRepository extends ReactiveCrudRepository<LectureInf
     // (현재) where 조건으로 memberId, lectureId를 주고, 데이터를 update
     @Query("update lectureInfo set testScore = :score where lectureId = :lectureId and memberId = :memberId")
     Mono<LectureInfo> updateTestScore(Integer score, Integer lectureId, Integer memberId);
+
+    @Query("select * from lectureInfo where memberId = :memberId")
+    Flux<Lecture> findAllByLectureInfo(Integer memberId);
 }
