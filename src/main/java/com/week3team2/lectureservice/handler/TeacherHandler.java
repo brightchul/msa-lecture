@@ -2,6 +2,7 @@ package com.week3team2.lectureservice.handler;
 
 import com.week3team2.lectureservice.entity.Lecture;
 import com.week3team2.lectureservice.entity.LectureContent;
+import com.week3team2.lectureservice.entity.LectureInfo;
 import com.week3team2.lectureservice.repository.LectureRepository;
 import com.week3team2.lectureservice.service.LectureService;
 import lombok.RequiredArgsConstructor;
@@ -67,5 +68,16 @@ public class TeacherHandler {
                         .contentType(APPLICATION_JSON)
                         .body(lecture, Lecture.class)
                         .switchIfEmpty(notFound));
+    }
+
+    // 강사가 강의정보 테이블의 시험점수(testScore)를 반영한다.
+    public Mono<ServerResponse> updateTestScore(ServerRequest request) {
+        Mono<LectureInfo> lectureInfoMono = request.bodyToMono(LectureInfo.class)
+                .flatMap(lectureService::updateTestScore);
+
+        return ServerResponse.ok()
+                .contentType(APPLICATION_JSON)
+                .body(lectureInfoMono, Lecture.class)
+                .onErrorResume(error -> ServerResponse.badRequest().build());
     }
 }

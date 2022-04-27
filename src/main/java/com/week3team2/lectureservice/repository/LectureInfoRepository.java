@@ -15,4 +15,7 @@ public interface LectureInfoRepository extends ReactiveCrudRepository<LectureInf
 
     @Query("select * from lectureInfo where lectureId=:lectureId")
     Flux<LectureInfo> findByLectureInfoList(Integer lectureId);
+
+    @Query("update lectureInfo set testScore = :testScore where lectureId = :lectureId and memberId = :memberId")
+    Mono<LectureInfo> updateTestScore(Integer testScore, Integer lectureId, Integer memberId);
 }
